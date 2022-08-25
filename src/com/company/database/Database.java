@@ -3,11 +3,16 @@ package com.company.database;
 import com.company.Const;
 import com.company.model.Line;
 
+import java.io.IOException;
+import java.io.InputStream;
+import java.nio.file.Files;
+import java.nio.file.Paths;
 import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.PreparedStatement;
 import java.sql.SQLException;
 import java.util.List;
+import java.util.Properties;
 
 public class Database {
     protected String dbHost = "localhost";
@@ -19,15 +24,21 @@ public class Database {
 
     //Create connection with Postgres database
     public Connection getDbConnection()  {
-        String connect = "jdbc:postgresql://" + dbHost + ":" + dbPort + "/" + dbName;
-
+        Properties props = new Properties();
+        //get database properties
+        try(InputStream in = Files.newInputStream(Paths.get("database.properties"))){
+            props.load(in);
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+        String connect = props.getProperty("url") + ":" + props.getProperty("port") + "/" + props.getProperty("database");
         try {
             Class.forName("org.postgresql.Driver");
         } catch (ClassNotFoundException e) {
             e.printStackTrace();
         }
         try {
-            Connection conn = DriverManager.getConnection(connect, dbUser,dbPass);
+            Connection conn = DriverManager.getConnection(connect,props.getProperty("username"),props.getProperty("password"));
             return conn;
         } catch (SQLException e) {
             System.out.println("Нет соединения!");
