@@ -15,12 +15,6 @@ import java.util.List;
 import java.util.Properties;
 
 public class Database {
-    protected String dbHost = "localhost";
-    protected String dbPort = "5432";
-    protected String dbUser = "postgres";
-    protected String dbPass = "12345";
-    protected String dbName = "rpa";
-
 
     //Create connection with Postgres database
     public Connection getDbConnection()  {
