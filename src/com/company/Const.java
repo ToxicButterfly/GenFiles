@@ -12,7 +12,7 @@ public class Const {
 
     //generated files parameters
     public static final int FILES_COUNT = 100;
-    public static final int FILES_LINES_COUNT = 100;
+    public static final int FILES_LINES_COUNT = 100000;
 
     public static final int INT_UPPER_BOUND = 100000000;
 
